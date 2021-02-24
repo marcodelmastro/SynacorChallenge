@@ -49,8 +49,7 @@ class VM:
             if self.i+3<len(self.mem): c = self.mem[self.i+3]                
             
             if op==0: # # halt: 0 - stop execution and terminate the program
-                print(self.reg)
-                print("HALT")
+                print("GAME OVER")
                 return
             
             elif op==1: # set: 1 a b - set register <a> to the value of <b>
