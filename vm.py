@@ -2,6 +2,7 @@
 
 from collections import deque,defaultdict
 import pickle
+import time
 
 class VM:
     def __init__(self,filename=""):
@@ -38,7 +39,8 @@ class VM:
 
     def run(self):
 
-        with open("actions.txt","w") as fout:
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        with open("actions_"+timestr+".txt","w") as fout:
         
             while True:
             
@@ -154,7 +156,7 @@ class VM:
                             pickle.dump(self.stack,f)
                             pickle.dump(self.i,f)
                         command = input()
-                        fout.write(command)
+                        fout.write(command+"\n")
                         for c in command:
                             self.input.append(ord(c))
                         self.input.append(ord('\n'))
