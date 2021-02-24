@@ -2,7 +2,7 @@
 
 ## ChangeLog
 
-* 2021-02-24: Implemented basic virtual machine and status saving mechanism. First 4 codes
+* 2021-02-24: Implemented basic virtual machine and status saving mechanism. First 4 codes. Added saving of actions to track/repeat progress.
 
 ## Codes
 
