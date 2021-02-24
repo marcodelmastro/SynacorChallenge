@@ -25,12 +25,12 @@ _ + _ * _^2 + _^3 - _ = 399
 
 ## Codes
 
-Code 1: iwAXllQmiZDv (it was in the instructions!)
-Code 2: XstgJSxeHSHA (first simple run of the VM)
-Code 3: IhBRSqeTnzgw (after self test)
-Code 4: XEBwBmFKDmLA (using tablet)
-Code 5: yZWfuTMfgZkV (chiseled on the wall of one of the passageways where the can is found)
-Code 6: gbwPqnSdSlUV (after having used the teleporter, found after solving the coin puzzles)
+- Code 1: iwAXllQmiZDv (it was in the instructions!)
+- Code 2: XstgJSxeHSHA (first simple run of the VM)
+- Code 3: IhBRSqeTnzgw (after self test)
+- Code 4: XEBwBmFKDmLA (using tablet)
+- Code 5: yZWfuTMfgZkV (chiseled on the wall of one of the passageways where the can is found)
+- Code 6: gbwPqnSdSlUV (after having used the teleporter, found after solving the coin puzzles)
 
 
 ## ChangeLog
