@@ -18,6 +18,11 @@ _ + _ * _^2 + _^3 - _ = 399
   * Blue coin (9 dots)
   * Shiny coin (pentagon on one side)
 * Coin puzzle solution: (9, 2, 5, 7, 3) blue, red, shiny, concave, corroded
+* Hacked the VM to read a prepackaged list of instructions
+* Hacked the interface to print and modify the register. Register 7 is usually 0, if changed to any other number I get:
+> A strange, electronic voice is projected into your mind:
+>  "Unusual setting detected!  Starting confirmation process!  Estimated time to completion: 1 billion years."
+
 ## Codes
 
 Code 1: iwAXllQmiZDv (it was in the instructions!)

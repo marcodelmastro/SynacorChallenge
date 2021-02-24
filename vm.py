@@ -37,7 +37,7 @@ class VM:
         else:
             return self.reg[b%32768]
 
-    def run(self):
+    def run(self,commands=[]):
 
         timestr = time.strftime("%Y%m%d-%H%M%S")
         with open("actions_"+timestr+".txt","w") as fout:
@@ -150,13 +150,28 @@ class VM:
                     # it can be assumed that once input starts, it will continue until a newline is encountered; 
                     # this means that you can safely read whole lines from the keyboard and trust that they will be fully read
                     if not len(self.input):
-                        with open("status.sav", "wb") as f:
-                            pickle.dump(self.mem,f)
-                            pickle.dump(self.reg,f)
-                            pickle.dump(self.stack,f)
-                            pickle.dump(self.i,f)
-                        command = input()
+                        #with open("status.sav", "wb") as f:
+                        #    pickle.dump(self.mem,f)
+                        #    pickle.dump(self.reg,f)
+                        #    pickle.dump(self.stack,f)
+                        #    pickle.dump(self.i,f)
+                        if len(commands)==0:
+                            command = input()
+                        else:
+                            command = commands.pop(0)
+                            print(command)
                         fout.write(command+"\n")
+
+                        if len(command):
+                            if command[0]=='Q':
+                                print("GOODBYE")
+                                return
+                            elif command[0]=="P":
+                                print(self.reg)
+                            elif command[0]=="8":
+                                self.reg[7] = int(command.split(" ")[1])
+                                print(self.reg)
+
                         for c in command:
                             self.input.append(ord(c))
                         self.input.append(ord('\n'))
@@ -174,24 +189,28 @@ def main():
     import os
     files = os.listdir('.')
     vm = VM()
-    mem = []
-    if 'status.sav' in files:
-        print("Welcome to the Synacor Challenge!")
-        ans = input("Do you want to start from last saved status? [y/n]")
-        if ans[0]=="Y" or ans[0]=='y':
-            with open("status.sav", "rb") as f:
-                mem = pickle.load(f)
-                reg = pickle.load(f)
-                stack = pickle.load(f)
-                i = pickle.load(f)
-        if len(mem):
-            vm.initialize(mem)
-            vm.i = i
-            vm.reg = reg
-            vm.stack = stack
-        else:
-            vm.readInput("synacor-challenge/challenge.bin")
-    vm.run()
+    
+    #mem = []
+    #if 'status.sav' in files:
+    #    print("Welcome to the Synacor Challenge!")
+    #    ans = input("Do you want to start from last saved status? [y/n]")
+    #    if ans[0]=="Y" or ans[0]=='y':
+    #        with open("status.sav", "rb") as f:
+    #            mem = pickle.load(f)
+    #            reg = pickle.load(f)
+    #            stack = pickle.load(f)
+    #            i = pickle.load(f)
+    #    if len(mem):
+    #        vm.initialize(mem)
+    #        vm.i = i
+    #        vm.reg = reg
+    #        vm.stack = stack
+    #    else:
+    
+    vm.readInput("synacor-challenge/challenge.bin")
+    with open('moves.txt') as fmoves:
+        commands = [ c.strip("\n") for c in fmoves.readlines()]
+    vm.run(commands)
 
 if __name__ == "__main__":
     main()
