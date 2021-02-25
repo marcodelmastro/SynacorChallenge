@@ -32,8 +32,9 @@ class VM:
                 i+=1 
 
     def printReg(self):
+        print("REG =  ",end="")
         for k in self.reg.keys():
-            print("{}:\t{}".format(k,self.reg[k]),end="\t")
+            print("{:1d}: {:5d} | ".format(k,self.reg[k]),end="")
         print()
         
     def rov(self,b): # register or value
@@ -44,6 +45,7 @@ class VM:
 
     def run(self,commands=[]):
 
+        lastcommand = ""
         #timestr = time.strftime("%Y%m%d-%H%M%S")
         #filenameout = "actions_"+timestr+".txt"
         filenameout = "actions.txt"
@@ -59,13 +61,13 @@ class VM:
                 if self.i+2<len(self.mem): b = self.mem[self.i+2]
                 if self.i+3<len(self.mem): c = self.mem[self.i+3]                
 
-                #if self.reg[7]!=0:
-                #    print(self.i,op,a,b,c,end=" ")
-
-                #if lastcommand == "use teleporter":
-                #    cc = (self.i,op,a,b,c)
-                #    print(cc, end = " ")
+                if lastcommand=="use teleporter":
+                    print("use teleporter")
+                    lastcommand="loop"
                 
+                if self.reg[7]!=0:
+                    print("{:5d} | {:2d} {:5d} {:5d} {:5d} || ".format(self.i,op,a,b,c),end="")
+                             
                 if op==0: # # halt: 0 - stop execution and terminate the program
                     print("GAME OVER")
                     return
@@ -187,7 +189,7 @@ class VM:
                                 print(self.reg)
                             elif command[0]=="R":
                                 self.reg[7] = int(command.split(" ")[1])
-                                #self.printReg()
+                                self.printReg()
 
                         for c in command:
                             self.input.append(ord(c))
@@ -201,8 +203,8 @@ class VM:
                 if self.i > len(self.mem):
                     return
                 
-                #if self.reg[7]!=0:
-                #    self.printReg()
+                if self.reg[7]!=0:
+                    self.printReg()
 
 
 
