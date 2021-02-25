@@ -38,5 +38,5 @@ _ + _ * _^2 + _^3 - _ = 399
 * 2021-02-24: 
   * Implemented basic virtual machine and status saving mechanism. 
   * Added saving of VM status and command list to track/repeat progress.
-  * Found first 4 codes
+  * Found first 6 codes
 
