@@ -2,10 +2,9 @@
 
 https://challenge.synacor.com
 
-## Notes on progrosse
+## Notes on progress
 
 * Virtual machine implementation was relatively simple, self test at beginning helped quite a lot the debugging
-
 * A text adventure!
 
 * Grues are dangerous, they live in the darkness. I need light to proceed.
