@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-from collections import deque,defaultdict
+from collections import deque
 import pickle
 import time
 
 class VM:
     def __init__(self,filename=""):
         self.mem = [ 0 for i in range(2**15)]
-        self.reg = defaultdict(int)
-        #for n in range(8):
-        #    self.reg[n] = 0
+        self.reg = {}
+        for n in range(8):
+            self.reg[n] = 0
         self.stack = deque()
         if filename !="":
             self.readInput(filename)
@@ -30,7 +30,12 @@ class VM:
                 self.mem[i] = int.from_bytes(read, "little")
                 read = f.read(2)
                 i+=1 
-    
+
+    def printReg(self):
+        for k in self.reg.keys():
+            print("{}:\t{}".format(k,self.reg[k]),end="\t")
+        print()
+        
     def rov(self,b): # register or value
         if b < 32768:
             return b
@@ -39,8 +44,11 @@ class VM:
 
     def run(self,commands=[]):
 
-        timestr = time.strftime("%Y%m%d-%H%M%S")
-        with open("actions_"+timestr+".txt","w") as fout:
+        #timestr = time.strftime("%Y%m%d-%H%M%S")
+        #filenameout = "actions_"+timestr+".txt"
+        filenameout = "actions.txt"
+        
+        with open(filenameout,"w") as fout:
         
             while True:
             
@@ -50,7 +58,14 @@ class VM:
                 if self.i+1<len(self.mem): a = self.mem[self.i+1]
                 if self.i+2<len(self.mem): b = self.mem[self.i+2]
                 if self.i+3<len(self.mem): c = self.mem[self.i+3]                
-        
+
+                #if self.reg[7]!=0:
+                #    print(self.i,op,a,b,c,end=" ")
+
+                #if lastcommand == "use teleporter":
+                #    cc = (self.i,op,a,b,c)
+                #    print(cc, end = " ")
+                
                 if op==0: # # halt: 0 - stop execution and terminate the program
                     print("GAME OVER")
                     return
@@ -150,6 +165,7 @@ class VM:
                     # it can be assumed that once input starts, it will continue until a newline is encountered; 
                     # this means that you can safely read whole lines from the keyboard and trust that they will be fully read
                     if not len(self.input):
+                        # save status
                         #with open("status.sav", "wb") as f:
                         #    pickle.dump(self.mem,f)
                         #    pickle.dump(self.reg,f)
@@ -160,6 +176,7 @@ class VM:
                         else:
                             command = commands.pop(0)
                             print(command)
+                        lastcommand = command
                         fout.write(command+"\n")
 
                         if len(command):
@@ -168,9 +185,9 @@ class VM:
                                 return
                             elif command[0]=="P":
                                 print(self.reg)
-                            elif command[0]=="8":
+                            elif command[0]=="R":
                                 self.reg[7] = int(command.split(" ")[1])
-                                print(self.reg)
+                                #self.printReg()
 
                         for c in command:
                             self.input.append(ord(c))
@@ -183,6 +200,10 @@ class VM:
 
                 if self.i > len(self.mem):
                     return
+                
+                #if self.reg[7]!=0:
+                #    self.printReg()
+
 
 
 def main():
