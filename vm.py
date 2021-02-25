@@ -209,10 +209,13 @@ class VM:
 
 
 def main():
-    import os
-    files = os.listdir('.')
+
+    import sys
+
     vm = VM()
-    
+     
+    #import os
+    #files = os.listdir('.')
     #mem = []
     #if 'status.sav' in files:
     #    print("Welcome to the Synacor Challenge!")
@@ -231,9 +234,18 @@ def main():
     #    else:
     
     vm.readInput("synacor-challenge/challenge.bin")
-    with open('moves.txt') as fmoves:
-        commands = [ c.strip("\n") for c in fmoves.readlines()]
-    vm.run(commands)
 
+    #with open('moves.txt') as fmoves:
+    if (len(sys.argv)>1):
+        with open(sys.argv[1], 'r') as fmoves:
+            commands = [ c.strip("\n") for c in fmoves.readlines()]
+            if (len(commands)):
+                print("Synacor Challenge: using moves from {} as pre-recorded actions...".format(sys.argv[1]))
+                vm.run(commands)
+            else:
+                vm.run()
+    else:
+        vm.run()
+        
 if __name__ == "__main__":
     main()
