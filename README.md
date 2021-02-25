@@ -28,7 +28,7 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6048 |  2 32768     9 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6050 |  9 32769 32769 32767 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6054 | 17  6027     1 32769 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-* The loop sometimes gets bigget involving instructions 18:
+* The loop sometimes gets bigger involving instructions 18:
 > 6027 |  7 32768  6035     9 || REG =  0:     0 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6030 |  9 32768 32769     1 || REG =  0:     2 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6034 | 18     7 32769  6048 || REG =  0:     2 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
@@ -37,7 +37,7 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6059 |  3 32768     9 32768 || REG =  0:     1 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-* To proceed further I need a more serious disassembler!
+* To proceed further I need a more serious disassembler (and more free time)!
 
 ## Codes
 
@@ -57,4 +57,4 @@ _ + _ * _^2 + _^3 - _ = 399
   * Found first 6 codes
 
 * 2021-02-25:
-  * More output to try to figure out what the teleporter checking algorithm does
+  * More output to try to figure out what the teleporter checking algorithm does.
