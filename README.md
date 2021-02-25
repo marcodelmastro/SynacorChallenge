@@ -2,32 +2,47 @@
 
 https://challenge.synacor.com
 
-## Notes
+## Notes on progrosse
 
 * Virtual machine implementation was relatively simple, self test at beginning helped quite a lot the debugging
+
 * A text adventure!
+
 * Grues are dangerous, they live in the darkness. I need light to proceed.
+
 * After the ladder: west, north, south, north to find the oil can
+
 * Ruins:
 > You stand in the massive central hall of these ruins.  The walls are crumbling, and vegetation has clearly taken over.  Rooms are attached in all directions.  There is a strange monument in the center of the hall with circular slots and unusual symbols.  It reads:
 _ + _ * _^2 + _^3 - _ = 399
+
 * Coins
   * Red coin (2 dots)
   * Concanve coin (7 dots)
   * Corroded coin (triangle on one side)
   * Blue coin (9 dots)
   * Shiny coin (pentagon on one side)
-* Coin puzzle solution: (9, 2, 5, 7, 3) blue, red, shiny, concave, corroded
-* Hacked the VM to read a prepackaged list of instructions
-* Hacked the interface to print and modify the register. Register 7 is usually 0, if changed to any other number I get:
+
+* Coin puzzle solution: (9, 2, 5, 7, 3) blue, red, shiny, concave, corroded (see Jupyter notebook: easy to brute-force using `itertools` permutations)
+
+* Hacked the VM to read a prepackaged list of instructions to quick reach teleporter
+
+* To change teleporter behaviour I need to find the right value to set to register 7 before issuing the `use teleporter` command (see `strangebook.txt`)
+
+* Hacked the interface to print and modify the register accprting custom commands
+
+* Register 7 is usually set to 0, if changed to any other number and then `use teleporter` issued the code gets into a very intensive (and probably inefficient) calculation:
+
 > A strange, electronic voice is projected into your mind:
 >  "Unusual setting detected!  Starting confirmation process!  Estimated time to completion: 1 billion years."
+
 * Printing out loop instructions and register changes after the above message, I notice a loop of some sort happening after instruction at memory 5489, that trigger repeating instructions that begins at memory addredd 6027:
 > 6027 |  7 32768  6035     9 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6035 |  7 32769  6048     9 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6048 |  2 32768     9 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6050 |  9 32769 32769 32767 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6054 | 17  6027     1 32769 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
+
 * The loop sometimes gets bigger involving instructions 18:
 > 6027 |  7 32768  6035     9 || REG =  0:     0 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6030 |  9 32768 32769     1 || REG =  0:     2 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
@@ -37,7 +52,9 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6059 |  3 32768     9 32768 || REG =  0:     1 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-* To proceed further I need a more serious disassembler (and more free time)!
+
+* To proceed further I need a more serious disassembler (and more free time)! Stop for now...
+
 
 ## Codes
 
