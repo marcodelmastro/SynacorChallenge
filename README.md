@@ -68,6 +68,21 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * Implemented a disassebler, saving program in `program.txt`. Noted that part of the memory does not correposnd to architecture opcodes, these must be values storing the sentences used by the text adventure engine: saving them as `VALUE` instructions.
 
+* Here a more readable version of what happens before the loop:
+
+>  5483 | SET $0 4  
+>  5486 | SET $1 1  
+>  5489 | CALL 6027  
+>  5491 | EQ $1 $0 6  
+>  5495 | JF $1 5579__
+
+* As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call function at line 6027. 
+
+* Whatever the function does (or would do, given the almost infinite execution rime!) then line 5941 sets $1 to 1 if the content of $0 is equal to 6, otherwise to 0. If $1 is set tyo 1, then line 5495 would jump to instruction at line 5579, that I guess is what would trigger the alternative behaviour of the teleporter. So, I need to find out what the function at line 6027 does and how it would set $0 to 6, given the initial value $0(4) and $1(1), and an unknown value of $7 I need to set.
+
+* I suspect that, even assuming I can figure out what line 6027 do, it would still take quite some time even if I properly set $7. I would probably need to set $0 to 6, $7 to whatever value would lead to get $0 to be equal to 6, and bypass the call at line 5489 (e.g. replace it with a `NOOP` opcode).
+
+
 
 ## Codes
 
@@ -91,3 +106,4 @@ _ + _ * _^2 + _^3 - _ = 399
   
 * 2021-02-26:
   * Implemented disassembler to scrutinize program
+  * Studying the program...

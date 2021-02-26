@@ -70,7 +70,7 @@ class Disassembler:
                 self.i += 3
 
             elif op==8: # jf: 8 a b - if <a> is zero, jump to <b>
-                print("{:6d} | JF {:s}".format(self.i,self.rov(a),self.rov(b)))
+                print("{:6d} | JF {:s} {:s}".format(self.i,self.rov(a),self.rov(b)))
                 self.i += 3
 
             elif op==9: # add: 9 a b c - assign into <a> the sum of <b> and <c> (modulo 32768)
