@@ -4,7 +4,10 @@ https://challenge.synacor.com
 
 ## Notes on progress
 
+### VM Implementation and text adventure
+
 * Virtual machine implementation was relatively simple, self test at beginning helped quite a lot the debugging
+
 * A text adventure!
 
 * Grues are dangerous, they live in the darkness. I need light to proceed.
@@ -17,7 +20,7 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * Coins
   * Red coin (2 dots)
-  * Concanve coin (7 dots)
+  * Concave coin (7 dots)
   * Corroded coin (triangle on one side)
   * Blue coin (9 dots)
   * Shiny coin (pentagon on one side)
@@ -28,14 +31,16 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * To change teleporter behaviour I need to find the right value to set to register 7 before issuing the `use teleporter` command (see `strangebook.txt`)
 
-* Hacked the interface to print and modify the register accprting custom commands
+### Teleporter puzzle
+
+* Hacked the interface to print and modify the register accepting custom commands
 
 * Register 7 is usually set to 0, if changed to any other number and then `use teleporter` issued the code gets into a very intensive (and probably inefficient) calculation:
 
 > A strange, electronic voice is projected into your mind:
 >  "Unusual setting detected!  Starting confirmation process!  Estimated time to completion: 1 billion years."
 
-* Printing out loop instructions and register changes after the above message, I notice a loop of some sort happening after instruction at memory 5489, that trigger repeating instructions that begins at memory addredd 6027:
+* Printing out loop instructions and register changes after the above message, I notice a loop of some sort happening after instruction at memory 5489, that trigger repeating instructions that begins at memory address 6027:
 > 6027 |  7 32768  6035     9 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6035 |  7 32769  6048     9 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6048 |  2 32768     9 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
@@ -52,7 +57,15 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 
-* To proceed further I need a more serious disassembler (and more free time)! Stop for now...
+* Just before the routine starting at line 6017 gets called, there are the instructions:
+> 5483 |  1 32768     4     1 || REG =  0:     4 | 1:  5445 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |__
+> 5486 |  1 32769     1    17 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |__
+> 5489 | 17  6027     4 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |__
+The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions starting al line 6027. 
+
+* To proceed further I would need a more serious disassembler (and more free time) to decode what the instructions starting at line 6027 do! 
+
+* Implemented a disassebler, saving program in `program.txt`. Noted that part of the memory does not correposnd to architecture opcodes, these must be values storing the sentences used by the text adventure engine: saving them as `VALUE` instructions.
 
 
 ## Codes
@@ -74,3 +87,6 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * 2021-02-25:
   * More output to try to figure out what the teleporter checking algorithm does.
+  
+* 2021-02-26:
+  * Implemented disassembler to scrutinize program
