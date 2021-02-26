@@ -74,7 +74,7 @@ _ + _ * _^2 + _^3 - _ = 399
 >  5486 | SET $1 1  
 >  5489 | CALL 6027  
 >  5491 | EQ $1 $0 6  
->  5495 | JF $1 5579__
+>  5495 | JF $1 5579  
 
 * As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call function at line 6027. 
 
@@ -85,7 +85,11 @@ _ + _ * _^2 + _^3 - _ = 399
 * I could imagine to simply bypass instruction at line 5489 and set $0 to 6, but I won't know what $7 should be. I guess this can generate some problem, given that the strange book text warns that:
 > The second destination, however, is predicted to require a very specific energy level in the eighth register.  The teleporter must take great care to confirm that this energy level is exactly correct before teleporting its user!  If it is even slightly off, the user would (probably) arrive at the correct location, but would briefly experience anomalies in the fabric of reality itself.
 
-
+* I implemented the hack to skip the call to routine 6027 and I can indeed jump, but as expected I get a new error:
+> A strange, electronic voice is projected into your mind:  
+>  "Miscalibration detected!  Aborting teleportation!"  
+> Nothing else seems to happen.  
+So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 
 ## Codes
 
@@ -110,3 +114,4 @@ _ + _ * _^2 + _^3 - _ = 399
 * 2021-02-26:
   * Implemented disassembler to scrutinize program
   * Studying the program...
+  * Hack to bypass call to routine 6027

@@ -36,6 +36,11 @@ class VM:
         for k in self.reg.keys():
             print("{:1d}: {:5d} | ".format(k,self.reg[k]),end="")
         print()
+
+    def hackTeleporter(self):
+        self.mem[5489] = 21 # NOOP to skip call to teleporter verification algorithm
+        self.mem[5490] = 21 
+        self.reg[0] = 6
         
     def rov(self,b): # register or value
         if b < 32768:
@@ -65,8 +70,8 @@ class VM:
                     print("use teleporter")
                     lastcommand="loop"
                 
-                if self.reg[7]!=0:
-                    print("{:5d} | {:2d} {:5d} {:5d} {:5d} || ".format(self.i,op,a,b,c),end="")
+                #if self.reg[7]!=0:
+                #    print("{:5d} | {:2d} {:5d} {:5d} {:5d} || ".format(self.i,op,a,b,c),end="")
                              
                 if op==0: # # halt: 0 - stop execution and terminate the program
                     print("GAME OVER")
@@ -187,9 +192,10 @@ class VM:
                                 return
                             elif command[0]=="P":
                                 print(self.reg)
-                            elif command[0]=="R":
+                            elif command[0]=="T":
                                 self.reg[7] = int(command.split(" ")[1])
-                                self.printReg()
+                                self.hackTeleporter()
+                                #self.printReg()
 
                         for c in command:
                             self.input.append(ord(c))
@@ -203,8 +209,8 @@ class VM:
                 if self.i > len(self.mem):
                     return
                 
-                if self.reg[7]!=0:
-                    self.printReg()
+                #if self.reg[7]!=0:
+                #    self.printReg()
 
 
 
