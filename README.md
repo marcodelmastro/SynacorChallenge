@@ -80,7 +80,10 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * Whatever the function does (or would do, given the almost infinite execution rime!) then line 5941 sets $1 to 1 if the content of $0 is equal to 6, otherwise to 0. If $1 is set tyo 1, then line 5495 would jump to instruction at line 5579, that I guess is what would trigger the alternative behaviour of the teleporter. So, I need to find out what the function at line 6027 does and how it would set $0 to 6, given the initial value $0(4) and $1(1), and an unknown value of $7 I need to set.
 
-* I suspect that, even assuming I can figure out what line 6027 do, it would still take quite some time even if I properly set $7. I would probably need to set $0 to 6, $7 to whatever value would lead to get $0 to be equal to 6, and bypass the call at line 5489 (e.g. replace it with a `NOOP` opcode).
+* I suspect that, even assuming I can figure out what line 6027 do, it would still take quite some time even if I properly set $7. I would probably need to set $0 to 6, $7 to whatever value would lead to get $0 to be equal to 6, and bypass the call at line 5489 (e.g. replace it with a `NOOP` opcode). 
+
+* I could imagine to simply bypass instruction at line 5489 and set $0 to 6, but I won't know what $7 should be. I guess this can generate some problem, given that the strange book text warns that:
+> The second destination, however, is predicted to require a very specific energy level in the eighth register.  The teleporter must take great care to confirm that this energy level is exactly correct before teleporting its user!  If it is even slightly off, the user would (probably) arrive at the correct location, but would briefly experience anomalies in the fabric of reality itself.
 
 
 
