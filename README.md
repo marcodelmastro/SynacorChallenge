@@ -66,8 +66,7 @@ _ + _ * _^2 + _^3 - _ = 399
 
 * Implemented a disassebler, saving program in `program.txt`. Noted that part of the memory does not correposnd to architecture opcodes, these must be values storing the sentences used by the text adventure engine: saving them as `VALUE` instructions.
 
-* Here a more readable version of what happens before the loop:
-
+* Here a more readable version of what happens before the loop:  
 >  5483 | SET $0 4  
 >  5486 | SET $1 1  
 >  5489 | CALL 6027  
@@ -87,6 +86,25 @@ As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call func
 >  "Miscalibration detected!  Aborting teleportation!"  
 > Nothing else seems to happen.
 So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
+
+* This is the code corresponding to the teleporting verification algorithm.
+>  6027 | JT $0  
+>  6030 | ADD $0 $1 1  
+>  6034 | RET  
+>  6035 | JT $1  
+>  6038 | ADD $0 $0 32767  
+>  6042 | SET $1 $7  
+>  6045 | CALL 6027  
+>  6047 | RET  
+>  6048 | PUSH $0  
+>  6050 | ADD $1 $1 32767  
+>  6054 | CALL 6027  
+>  6056 | SET $1 $0  
+>  6059 | POP $0  
+>  6061 | ADD $0 $0 32767  
+>  6065 | CALL 6027  
+>  6067 | RET
+It looks like a massively recursive function, given the internal calls to line 6027 at lines 6045, 6054 and 6065. I'll try to translate it in some more readable code, assumin it uses 3 variables ($0, $1 and $7), and $7 is not changed but only used to set $1 at line 6042.
 
 ## Codes
 
