@@ -38,9 +38,15 @@ class VM:
         print()
 
     def hackTeleporter(self):
-        self.mem[5489] = 21 # NOOP to skip call to teleporter verification algorithm
+        # NOOP to skip call to teleporter verification algorithm
+        self.mem[5489] = 21 
         self.mem[5490] = 21 
-        self.reg[0] = 6
+        #self.reg[0] = 6 # this is not enough, $0 get changed by `use teleporter` before the check $6==6
+        # Removing $0==6 check (lines from 5491 to 5494)
+        self.mem[5491] = 21
+        self.mem[5492] = 21
+        self.mem[5493] = 21
+        self.mem[5494] = 21
         
     def rov(self,b): # register or value
         if b < 32768:
@@ -195,7 +201,7 @@ class VM:
                             elif command[0]=="T":
                                 self.reg[7] = int(command.split(" ")[1])
                                 self.hackTeleporter()
-                                #self.printReg()
+                                self.printReg()
 
                         for c in command:
                             self.input.append(ord(c))

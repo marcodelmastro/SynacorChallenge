@@ -50,3 +50,6 @@ use concave coin
 use corroded coin
 north
 take teleporter
+T 25734
+use teleporter
+

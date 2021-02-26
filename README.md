@@ -88,10 +88,10 @@ As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call func
 So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 
 * This is the code corresponding to the teleporting verification algorithm.
->  6027 | JT $0  
+>  6027 | JT $0 6035  
 >  6030 | ADD $0 $1 1  
 >  6034 | RET  
->  6035 | JT $1  
+>  6035 | JT $1 6048  
 >  6038 | ADD $0 $0 32767  
 >  6042 | SET $1 $7  
 >  6045 | CALL 6027  
@@ -106,6 +106,17 @@ So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 >  6067 | RET
 It looks like a massively recursive function, given the internal calls to line 6027 at lines 6045, 6054 and 6065. I'll try to translate it in some more readable code, assumin it uses 3 variables ($0, $1 and $7), and $7 is not changed but only used to set $1 at line 6042.
 
+* I think I figured out what the function at line 6027 does, but the recusion levels explose in Python!
+
+* Implemented in `line6027(r0,r1,r7)` in c++ to avoid problem with recursion levels, and then memoized to speed it up
+
+* Implemented loop on value of $7 to find which one would return $0=6, I find $7=25734
+
+* My initial memory hack disabling algorithm check call is not enough: value of $0 that I set to 6 get changed by `use teleporter` command. Solution: also disable check $0==6 at line 5491-5494.
+
+* IT WORKS! I'm on the beach! 7th code!
+
+
 ## Codes
 
 - Code 1: iwAXllQmiZDv (it was in the instructions!)
@@ -114,6 +125,9 @@ It looks like a massively recursive function, given the internal calls to line 6
 - Code 4: XEBwBmFKDmLA (using tablet)
 - Code 5: yZWfuTMfgZkV (chiseled on the wall of one of the passageways where the can is found)
 - Code 6: gbwPqnSdSlUV (after having used the teleporter, found after solving the coin puzzles)
+- Code 7: wvKlYXqpEDah (Someone seems to have drawn a message in the sand here)
+
+   
 
 
 ## ChangeLog
@@ -130,3 +144,7 @@ It looks like a massively recursive function, given the internal calls to line 6
   * Implemented disassembler to scrutinize program
   * Studying the program...
   * Hack to bypass call to routine 6027
+  
+* 2021-02-27:
+  * Implemented function at lines 6027 in c++ with memoization
+  * Improved memory hack to avoid register 0 check when using teleporter

@@ -40,8 +40,13 @@ int main() {
   
   unsigned int r0 = 4;
   unsigned int r1 = 1;
-  unsigned int r7 = 1;
   
-  std::cout << "line6017(" << r0 << ", " << r1 << ", " << r7 << ") = " << line6027(r0,r1,r7) << std::endl;
+  for (unsigned int r7 = 1; r7<32768; r7++) {
+    int p = line6027(r0,r1,r7);
+    std::cout << "line6017(" << r0 << ", " << r1 << ", " << r7 << ") = " << p<< std::endl;
+    if (p==6) {
+      break;
+    }
+  }
   return 0;
 }
