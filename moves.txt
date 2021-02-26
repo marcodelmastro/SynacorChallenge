@@ -52,4 +52,18 @@ north
 take teleporter
 T 25734
 use teleporter
+west
+north
+north
+north
+north
+north
+north
+north
+east
+take journal
+look journal
+west
+north
+north
 

@@ -116,6 +116,14 @@ It looks like a massively recursive function, given the internal calls to line 6
 
 * IT WORKS! I'm on the beach! 7th code!
 
+### Tropical island
+
+* Found a journal (`journal.txt`) suggesting a path-finding (shorter route) puzzle:  
+> We can't seem to find a way to make the orb's weight match what the door wants before the hourglass runs out.  If only we could find a shorter route through the rooms...
+
+* Found the orb (the number '22' is carved into the orb's pedestal). I'm also facing a grid of chambers, each with a different symbol on the floor. I need to explore them to reconstruct the grid.
+
+
 
 ## Codes
 
