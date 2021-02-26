@@ -57,11 +57,12 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 
-* Just before the routine starting at line 6017 gets called, there are the instructions:
+* Just before the routine starting at line 6017 gets called, these are the instructions:
 > 5483 |  1 32768     4     1 || REG =  0:     4 | 1:  5445 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 5486 |  1 32769     1    17 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 5489 | 17  6027     4 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions (function) starting al line 6027. 
+
+  The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions (function) starting al line 6027. 
 
 * To proceed further I would need a more serious disassembler (and more free time) to decode what the instructions starting at line 6027 do! 
 
