@@ -66,7 +66,7 @@ class Disassembler:
                 self.i += 2
 
             elif op==7: # jt: 7 a b - if <a> is nonzero, jump to <b>
-                print("{:6d} | JT {:s}".format(self.i,self.rov(a),self.rov(b)))
+                print("{:6d} | JT {:s} {:s}".format(self.i,self.rov(a),self.rov(b)))
                 self.i += 3
 
             elif op==8: # jf: 8 a b - if <a> is zero, jump to <b>
