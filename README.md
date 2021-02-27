@@ -56,23 +56,22 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 
-* Just before the routine starting at line 6017 gets called, these are the instructions:
+* Just before the routine starting at line 6017 gets called, below are the instructions and the register values. 
+The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions (function) starting al line 6027. 
 > 5483 |  1 32768     4     1 || REG =  0:     4 | 1:  5445 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 5486 |  1 32769     1    17 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 5489 | 17  6027     4 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-  The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions (function) starting al line 6027. 
 
 * To proceed further I would need a more serious disassembler (and more free time) to decode what the instructions starting at line 6027 do! 
 
 * Implemented a disassebler, saving program in `program.txt`. Noted that part of the memory does not correposnd to architecture opcodes, these must be values storing the sentences used by the text adventure engine: saving them as `VALUE` instructions.
 
-* Here a more readable version of what happens before the loop:  
+* Here a more readable version of what happens before the loop. As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call function at line 6027. 
 >  5483 | SET $0 4  
 >  5486 | SET $1 1  
 >  5489 | CALL 6027  
 >  5491 | EQ $1 $0 6  
 >  5495 | JF $1 5579  
-As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call function at line 6027. 
 
 * Whatever the function does (or would do, given the almost infinite execution rime!) then line 5941 sets $1 to 1 if the content of $0 is equal to 6, otherwise to 0. If $1 is set tyo 1, then line 5495 would jump to instruction at line 5579, that I guess is what would trigger the alternative behaviour of the teleporter. So, I need to find out what the function at line 6027 does and how it would set $0 to 6, given the initial value $0(4) and $1(1), and an unknown value of $7 I need to set.
 
@@ -81,11 +80,10 @@ As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call func
 * I could imagine to simply bypass instruction at line 5489 and set $0 to 6, but I won't know what $7 should be. I guess this can generate some problem, given that the strange book text warns that:
 > The second destination, however, is predicted to require a very specific energy level in the eighth register.  The teleporter must take great care to confirm that this energy level is exactly correct before teleporting its user!  If it is even slightly off, the user would (probably) arrive at the correct location, but would briefly experience anomalies in the fabric of reality itself.
 
-* I implemented the hack to skip the call to routine 6027 and I can indeed jump, but as expected I get a new error:
+* I implemented the hack to skip the call to routine 6027 and I can indeed jump, but as expected I get a new error! I indeed need to compute a proper (_calibrated!_) value for $7...
 > A strange, electronic voice is projected into your mind:  
 >  "Miscalibration detected!  Aborting teleportation!"  
 > Nothing else seems to happen.
-So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 
 * This is the code corresponding to the teleporting verification algorithm.
 >  6027 | JT $0 6035  
@@ -104,7 +102,8 @@ So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 >  6061 | ADD $0 $0 32767  
 >  6065 | CALL 6027  
 >  6067 | RET  
-It looks like a massively recursive function, given the internal calls to line 6027 at lines 6045, 6054 and 6065. I'll try to translate it in some more readable code, assumin it uses 3 variables ($0, $1 and $7), and $7 is not changed but only used to set $1 at line 6042.
+
+* It looks like a massively recursive function, given the internal calls to line 6027 at lines 6045, 6054 and 6065. I'll try to translate it in some more readable code, assumin it uses 3 variables ($0, $1 and $7), and $7 is not changed but only used to set $1 at line 6042.
 
 * I think I figured out what the function at line 6027 does, but the recusion levels explose in Python!
 
