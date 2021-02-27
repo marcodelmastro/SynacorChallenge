@@ -161,4 +161,5 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
 * 2021-02-27:
   * Implemented function at lines 6027 in c++ with memoization
   * Improved memory hack to avoid register 0 check when using teleporter
+  * Added simple Makefile for c++ program compilation
   * Mapped the grid leading to vault door
