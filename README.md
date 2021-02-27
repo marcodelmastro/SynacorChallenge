@@ -44,7 +44,7 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6035 |  7 32769  6048     9 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6048 |  2 32768     9 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6050 |  9 32769 32769 32767 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-> 6054 | 17  6027     1 32769 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |
+> 6054 | 17  6027     1 32769 || REG =  0:     4 | 1:     0 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 
 * The loop sometimes gets bigger involving instructions 18:
 > 6027 |  7 32768  6035     9 || REG =  0:     0 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
@@ -54,12 +54,12 @@ _ + _ * _^2 + _^3 - _ = 399
 > 6056 |  1 32769 32768     3 || REG =  0:     2 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6059 |  3 32768     9 32768 || REG =  0:     1 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 6061 |  9 32768 32768 32767 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-> 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |
+> 6065 | 17  6027    18    11 || REG =  0:     0 | 1:     2 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 
 * Just before the routine starting at line 6017 gets called, these are the instructions:
 > 5483 |  1 32768     4     1 || REG =  0:     4 | 1:  5445 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
 > 5486 |  1 32769     1    17 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
-> 5489 | 17  6027     4 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |
+> 5489 | 17  6027     4 32769 || REG =  0:     4 | 1:     1 | 2:     3 | 3:    10 | 4:   101 | 5:     0 | 6:     0 | 7:     1 |  
   The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (opcode 17) call instructions (function) starting al line 6027. 
 
 * To proceed further I would need a more serious disassembler (and more free time) to decode what the instructions starting at line 6027 do! 
@@ -71,7 +71,7 @@ _ + _ * _^2 + _^3 - _ = 399
 >  5486 | SET $1 1  
 >  5489 | CALL 6027  
 >  5491 | EQ $1 $0 6  
->  5495 | JF $1 5579
+>  5495 | JF $1 5579  
 As already discovered before, line 5482 sets $0 to 4 and $1 to 1, then call function at line 6027. 
 
 * Whatever the function does (or would do, given the almost infinite execution rime!) then line 5941 sets $1 to 1 if the content of $0 is equal to 6, otherwise to 0. If $1 is set tyo 1, then line 5495 would jump to instruction at line 5579, that I guess is what would trigger the alternative behaviour of the teleporter. So, I need to find out what the function at line 6027 does and how it would set $0 to 6, given the initial value $0(4) and $1(1), and an unknown value of $7 I need to set.
@@ -103,7 +103,7 @@ So I indeed need to compute a proper (_calibrated!_) value for $7... :-(
 >  6059 | POP $0  
 >  6061 | ADD $0 $0 32767  
 >  6065 | CALL 6027  
->  6067 | RET
+>  6067 | RET  
 It looks like a massively recursive function, given the internal calls to line 6027 at lines 6045, 6054 and 6065. I'll try to translate it in some more readable code, assumin it uses 3 variables ($0, $1 and $7), and $7 is not changed but only used to set $1 at line 6042.
 
 * I think I figured out what the function at line 6027 does, but the recusion levels explose in Python!
