@@ -123,10 +123,10 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
 * Found the orb (the number '22' is carved into the orb's pedestal). I'm also facing a grid of chambers, each with a different symbol on the floor. I need to explore them to reconstruct the grid.
 
 * Mapped the grid leading at the vault door:
-> `  *   8   -   1 -> V(30) `  
-> `  4   *  11   *          `  
-> `  +   4   -  18          `  
-> `(22)  -   9   *          `  
+`  *   8   -   1 -> V(30) `  
+`  4   *  11   *          `  
+`  +   4   -  18          `  
+`(22)  -   9   *          `  
 
 * It looks like I need to find the series of moves that would bring the orb value from 22 to 30 according to the operations and values on the various room floors.
 
