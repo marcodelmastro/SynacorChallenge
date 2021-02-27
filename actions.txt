@@ -52,5 +52,38 @@ north
 take teleporter
 T 25734
 use teleporter
-
+west
+north
+north
+north
+north
+north
+north
+north
+east
+take journal
+look journal
+west
+north
+north
+# Navigate to Vault
+take orb
+north
+east
+east
+north
+west
+south
+east
+east
+west
+north
+north
+east
+vault
+take mirror
+use mirror
+look
+leave
+vault
 Q

@@ -130,6 +130,19 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
 
 * It looks like I need to find the series of moves that would bring the orb value from 22 to 30 according to the operations and values on the various room floors.
 
+* Implemented a simple BFS on the grid to readh vault door with path that evaluate at 30. I get this as the shortest route:  
+  `NEENWSEEWNNE`  
+  `((((((22+4)-11)*4)-18)-11)-1)`  
+
+> This vault contains incredible riches!  Piles of gold and platinum coins surround you, and the walls are adorned with topazes, rubies, sapphires, emeralds, opals, dilithium crystals, elerium-115, and unobtainium.
+
+> You gaze into the mirror, and you see yourself gazing back.  But wait!  It looks like someone wrote on your face while you were unconscious on the beach!  Through the mirror, you see "H8bdMx8AvbUH" scrawled in charcoal on your forehead.
+
+* The code `H8bdMx8AvbUH` does not work, I guess I have to reverse it since I see it in the mirror. I made the mistake of simply inverting the string, but to mirror it completely I have to invert `b` and `d`...
+
+* FINISHED!
+
+![8 codes!](./SynacorChallenge.png "8 codes!")
 
 ## Codes
 
@@ -140,8 +153,7 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
 - Code 5: yZWfuTMfgZkV (chiseled on the wall of one of the passageways where the can is found)
 - Code 6: gbwPqnSdSlUV (after having used the teleporter, found after solving the coin puzzles)
 - Code 7: wvKlYXqpEDah (Someone seems to have drawn a message in the sand here)
-
-
+- Code 8: HUdvA8xMbd8H (Someone wrote on my face while I was unconscious on the beach, and I see it through the mirror)
 
 ## ChangeLog
 
@@ -163,3 +175,4 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
   * Improved memory hack to avoid register 0 check when using teleporter
   * Added simple Makefile for c++ program compilation
   * Mapped the grid leading to vault door
+  * Implemented BFS search of path to vault, finished challenge!

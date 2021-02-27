@@ -50,6 +50,7 @@ use concave coin
 use corroded coin
 north
 take teleporter
+# Teleporter hack!
 T 25734
 use teleporter
 west
@@ -66,4 +67,17 @@ look journal
 west
 north
 north
-
+# Navigate to Vault
+take orb
+north
+east
+east
+north
+west
+south
+east
+east
+west
+north
+north
+east
