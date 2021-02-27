@@ -122,7 +122,7 @@ The first two (opcode 1) set registers 0 to 4 and register 1 to 0. The third (op
 
 * Found the orb (the number '22' is carved into the orb's pedestal). I'm also facing a grid of chambers, each with a different symbol on the floor. I need to explore them to reconstruct the grid.
 
-* Mapped the grid leading at the vault door:
+* Mapped the grid leading at the vault door:  
 `  *   8   -   1 -> V(30) `  
 `  4   *  11   *          `  
 `  +   4   -  18          `  
